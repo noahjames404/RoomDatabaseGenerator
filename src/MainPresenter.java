@@ -18,13 +18,26 @@ public class MainPresenter implements IMain.IPresenter {
     IMain.IViewer iviewer;
     public MainPresenter(IMain.IViewer iviewer) {
         entity = new Entity();
+//        entity.setDatatypeEquivalentValues(Utils.data_types_equivalent);
+        entity.setDatatypeDefaultValues(Utils.default_value);
         this.iviewer = iviewer;
     }
     
+    
+    
     @Override
-    public void generateEntity(String data_source,IMain.OnFinish callback){
+    public void generateEntity(String convert_type,boolean uppercase_columns, String data_source,IMain.OnFinish callback){
          try{
-             String result = entity.generate(data_source);
+             entity.setUppercaseColumns(uppercase_columns);
+             String result = "";
+             switch(convert_type.toLowerCase()){
+                 case "manual": 
+                      result = entity.generate(data_source);
+                     break;
+                 case "mysql":
+                      result = entity.generateMysql(data_source);
+                     break;
+             }
              callback.onSuccess(result);
          }catch(Exception ex){
              callback.onFailed("Invalid Syntax: " + ex);
@@ -32,6 +45,7 @@ public class MainPresenter implements IMain.IPresenter {
          }
         
     }
+  
     
 
     @Override

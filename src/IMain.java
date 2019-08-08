@@ -15,7 +15,7 @@ public interface IMain {
     }
     
     interface IPresenter{
-        void generateEntity(String data_source,IMain.OnFinish callback);
+        void generateEntity(String convert_type,boolean uppercase_columns,String data_source,IMain.OnFinish callback);
         void loadGuidelines();
     }
     

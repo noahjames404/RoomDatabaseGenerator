@@ -11,12 +11,11 @@
 public class Utils {
 
     /**
-     *
+     *array[mysql_datatype,equivalent_datatype_in_java]
      */
     public static final String [][] data_types_equivalent = {
         {"varchar","String"},
         {"text","String"},
-        {"int","long"},
         {"char","char"},
         {"tinytext","String"},
         {"text","String"},
@@ -34,5 +33,14 @@ public class Utils {
         {"datetime","String"},
         {"timestamp","String"},
         {"time","String"}, 
+    };
+    
+    public static final String[][] default_value =  {
+        {"String","\"\""},
+        {"int","0"},
+        {"double","0"},
+        {"long","0"},
+        {"float","0"},
+        {"char","''"},
     };
 }

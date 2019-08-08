@@ -43,6 +43,8 @@ public class MainFrame extends javax.swing.JFrame implements IMain.IViewer{
         jScrollPane2 = new javax.swing.JScrollPane();
         ta_result = new javax.swing.JTextArea();
         jButton1 = new javax.swing.JButton();
+        cb_uppercase = new javax.swing.JCheckBox();
+        cmb_convert_type = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -72,28 +74,37 @@ public class MainFrame extends javax.swing.JFrame implements IMain.IViewer{
             }
         });
 
+        cb_uppercase.setText("UPPERCASE");
+        cb_uppercase.setToolTipText("convert columns to uppercase");
+
+        cmb_convert_type.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Manual", "Mysql" }));
+
         javax.swing.GroupLayout cb_daoLayout = new javax.swing.GroupLayout(cb_dao);
         cb_dao.setLayout(cb_daoLayout);
         cb_daoLayout.setHorizontalGroup(
             cb_daoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(cb_daoLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(cb_daoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(cb_daoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(cb_daoLayout.createSequentialGroup()
-                        .addGroup(cb_daoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton1))
+                    .addGroup(cb_daoLayout.createSequentialGroup()
+                        .addGroup(cb_daoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(cb_daoLayout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jButton1))
+                                .addComponent(cb_uppercase)
+                                .addGap(126, 126, 126)
+                                .addComponent(cmb_convert_type, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 371, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(cb_daoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(cb_daoLayout.createSequentialGroup()
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 371, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 408, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, cb_daoLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btn_generate, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 408, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(cb_daoLayout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btn_generate, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         cb_daoLayout.setVerticalGroup(
             cb_daoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -109,7 +120,11 @@ public class MainFrame extends javax.swing.JFrame implements IMain.IViewer{
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 289, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 289, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btn_generate, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(cb_daoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(cb_daoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(cb_uppercase)
+                        .addComponent(cmb_convert_type, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btn_generate, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -123,7 +138,7 @@ public class MainFrame extends javax.swing.JFrame implements IMain.IViewer{
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(cb_dao, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(cb_dao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -131,7 +146,8 @@ public class MainFrame extends javax.swing.JFrame implements IMain.IViewer{
 
     private void btn_generateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_generateActionPerformed
         // TODO add your handling code here:
-      presenter.generateEntity(ta_data.getText(), new IMain.OnFinish() {
+      
+      presenter.generateEntity(cmb_convert_type.getSelectedItem().toString(),cb_uppercase.isSelected(),ta_data.getText(), new IMain.OnFinish() {
           @Override
           public void onSuccess(String message) {
               ta_result.setText(message);
@@ -185,6 +201,8 @@ public class MainFrame extends javax.swing.JFrame implements IMain.IViewer{
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_generate;
     private javax.swing.JPanel cb_dao;
+    private javax.swing.JCheckBox cb_uppercase;
+    private javax.swing.JComboBox<String> cmb_convert_type;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
